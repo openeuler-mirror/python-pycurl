@@ -6,7 +6,7 @@
 
 Name:           python-pycurl
 Version:        7.43.0.2
-Release:        5
+Release:        6
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
@@ -35,7 +35,7 @@ This package contains development files for %{name}
 %package -n python2-pycurl
 Summary:        Python interface to libcurl for Python 2
 %{?python_provide:%python_provide python2-pycurl}
-BuildRequires:  python2-devel python2-bottle python2-nose python2-pyflakes
+BuildRequires:  python2-devel python2-bottle python2-nose
 Requires:       libcurl >= %{libcurl_ver}
 
 Provides:       pycurl = %{version}-%{release}
@@ -124,6 +124,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Fri Oct 25 2019 openEuler Buildteam <buildteam@openeuler.org> - 7.43.0.2-6
+- optimize spec file.
+
 * Fri Sep 27 2019 openEuler Buildteam <buildteam@openeuler.org> - 7.43.0.2-5
 - del unnecessary statement
 
