@@ -11,11 +11,10 @@ Bug: https://bugzilla.redhat.com/1446850
  src/module.c | 20 +-------------------
  1 file changed, 1 insertion(+), 19 deletions(-)
 
-diff --git a/src/module.c b/src/module.c
-index a7108a0..af79875 100644
---- a/src/module.c
-+++ b/src/module.c
-@@ -322,7 +322,7 @@ initpycurl(void)
+diff -Naur a/src/module.c b/src/module.c
+--- a/src/module.c	2019-06-17 13:14:58.000000000 +0800
++++ b/src/module.c	2020-08-10 11:38:34.177355327 +0800
+@@ -322,7 +322,7 @@
  {
      PyObject *m, *d;
      const curl_version_info_data *vi;
@@ -24,7 +23,7 @@ index a7108a0..af79875 100644
      size_t libcurl_version_len, pycurl_version_len;
      PyObject *xio_module = NULL;
      PyObject *collections_module = NULL;
-@@ -345,24 +345,6 @@ initpycurl(void)
+@@ -345,26 +345,6 @@
          goto error;
      }
  
@@ -38,6 +37,8 @@ index a7108a0..af79875 100644
 -        runtime_ssl_lib = "gnutls";
 -    } else if (!strncmp(vi->ssl_version, "NSS/", 4)) {
 -        runtime_ssl_lib = "nss";
+-    } else if (!strncmp(vi->ssl_version, "mbedTLS/", 8)) {
+-        runtime_ssl_lib = "mbedtls";
 -    } else {
 -        runtime_ssl_lib = "none/other";
 -    }
@@ -49,6 +50,3 @@ index a7108a0..af79875 100644
      /* Initialize the type of the new type objects here; doing it here
       * is required for portability to Windows without requiring C++. */
      p_Curl_Type = &Curl_Type;
--- 
-2.10.2
-

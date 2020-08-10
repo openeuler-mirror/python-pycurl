@@ -5,8 +5,8 @@
 %global libcurl_ver %(sed %{libcurl_sed} %{curlver_h} 2>/dev/null || echo 0)
 
 Name:           python-pycurl
-Version:        7.43.0.2
-Release:        6
+Version:        7.43.0.3
+Release:        1
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
@@ -124,6 +124,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Mon Aug 10 2020 shixuantong <shixuantong@huawei.com> - 7.43.0.3-1
+- update to 7.43.0.3
+
 * Fri Oct 25 2019 openEuler Buildteam <buildteam@openeuler.org> - 7.43.0.2-6
 - optimize spec file.
 
