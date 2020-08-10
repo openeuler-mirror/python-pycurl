@@ -5,8 +5,8 @@
 %global libcurl_ver %(sed %{libcurl_sed} %{curlver_h} 2>/dev/null || echo 0)
 
 Name:           python-pycurl
-Version:        7.43.0.2
-Release:        6
+Version:        7.43.0.5
+Release:        1
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
@@ -22,6 +22,7 @@ objects identified by a URL from a Python program, similar to the
 urllib Python module. PycURL is mature, very fast, and supports a lot
 of features.
 
+
 %package        devel
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
@@ -30,23 +31,6 @@ Requires:       %{name} = %{version}-%{release}
 This package contains development files for %{name}
 
 %package_help
-
-%if 0%{?with_python2}
-%package -n python2-pycurl
-Summary:        Python interface to libcurl for Python 2
-%{?python_provide:%python_provide python2-pycurl}
-BuildRequires:  python2-devel python2-bottle python2-nose
-Requires:       libcurl >= %{libcurl_ver}
-
-Provides:       pycurl = %{version}-%{release}
-
-%description -n python2-pycurl
-PycURL is a Python interface to libcurl. PycURL can be used to fetch
-objects identified by a URL from a Python program, similar to the
-urllib Python module. PycURL is mature, very fast, and supports a lot
-of features.
-This package if for Python2.
-%endif
 
 %package -n python3-pycurl
 Summary:        Python interface to libcurl for Python 3
@@ -63,7 +47,8 @@ This package is for Python3.
 
 %prep
 %autosetup -n pycurl-%{version} -p1
-
+rm -f winbuild.py
+sed -e 's| winbuild.py||' -i Makefile
 # remove binaries packaged by upstream
 rm -f tests/fake-curl/libcurl/*.so
 # remove a failed test-case that relies on sftp://web.sourceforge.net being available
@@ -78,17 +63,10 @@ sed -e 's/ --show-skipped//' \
     -i tests/run.sh
 
 %build
-%if 0%{?with_python2}
-%py2_build -- --with-openssl
-%endif
-
 %py3_build -- --with-openssl
 
 %install
 export PYCURL_SSL_LIBRARY=openssl
-%if 0%{?with_python2}
-%py2_install
-%endif
 %py3_install
 rm -rf %{buildroot}%{_datadir}/doc/pycurl
 
@@ -107,15 +85,6 @@ rm -fv tests/fake-curl/libcurl/*.so
 %defattr(-,root,root)
 %doc ChangeLog README.rst doc
 
-%if 0%{?with_python2}
-%files -n python2-pycurl
-%defattr(-,root,root)
-%license COPYING-LGPL COPYING-MIT
-%{python2_sitearch}/curl/
-%{python2_sitearch}/pycurl.so
-%{python2_sitearch}/pycurl-%{version}-*.egg-info
-%endif
-
 %files -n python3-pycurl
 %defattr(-,root,root)
 %license COPYING-LGPL COPYING-MIT
@@ -124,6 +93,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Thu Aug 4 2020 shixuantong <shixuantong@huawei.com> - 7.43.0.5-1
+- update to 7.43.0.5
+
 * Fri Oct 25 2019 openEuler Buildteam <buildteam@openeuler.org> - 7.43.0.2-6
 - optimize spec file.
 
