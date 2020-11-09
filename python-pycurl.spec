@@ -6,7 +6,7 @@
 
 Name:           python-pycurl
 Version:        7.43.0.5
-Release:        1
+Release:        2
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
@@ -74,7 +74,7 @@ rm -rf %{buildroot}%{_datadir}/doc/pycurl
 export PYTHONPATH=%{buildroot}%{python3_sitearch}
 export PYCURL_SSL_LIBRARY=openssl
 export PYCURL_VSFTPD_PATH=vsftpd
-make test PYTHON=%{__python3} NOSETESTS="nosetests-%{python3_version} -v"
+make test PYTHON=%{__python3} NOSETESTS="nosetests-%{python3_version} -v" PYFLAKES=true
 rm -fv tests/fake-curl/libcurl/*.so
 
 %files devel
@@ -93,6 +93,12 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Mon Nov 9 2020 wangjie<wangjie294@huawei.com> -7.43.0.5-2
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:fix compile error
+
 * Thu Aug 4 2020 shixuantong <shixuantong@huawei.com> - 7.43.0.5-1
 - update to 7.43.0.5
 
