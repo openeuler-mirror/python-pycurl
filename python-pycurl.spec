@@ -3,16 +3,16 @@
 %global libcurl_sed '/^#define LIBCURL_VERSION "/!d;s/"[^"]*$//;s/.*"//;q'
 %global curlver_h /usr/include/curl/curlver.h
 %global libcurl_ver %(sed %{libcurl_sed} %{curlver_h} 2>/dev/null || echo 0)
+%global srcname pycurl
 
-Name:           python-pycurl
-Version:        7.43.0.5
-Release:        2
+Name:           python-%{srcname}
+Version:        7.43.0.6
+Release:        1
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
-Source0:        https://dl.bintray.com/pycurl/pycurl/pycurl-%{version}.tar.gz
+Source0:        %{pypi_source}
 # drop link-time vs. run-time TLS backend check (#1446850)
-Patch0:         0002-python-pycurl-7.43.0-tls-backend.patch
 
 BuildRequires:  gcc libcurl-devel openssl-devel vsftpd
 
@@ -93,6 +93,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Tue Feb 2 2021 shangyibin <shangyibin1@huawei.com> - 7.43.0.6-1
+- Upgrade to version 7.43.0.6
+
 * Mon Nov 9 2020 wangjie<wangjie294@huawei.com> -7.43.0.5-2
 - Type:bugfix
 - ID:NA
