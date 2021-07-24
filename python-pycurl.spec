@@ -7,13 +7,16 @@
 
 Name:           python-%{srcname}
 Version:        7.43.0.6
-Release:        1
+Release:        2
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
 Source0:        %{pypi_source}
 # drop link-time vs. run-time TLS backend check (#1446850)
 
+Patch6000:      backport-option_constants_test-skip-check-of-SSLVERSION_SSLv*.patch
+Patch6001:      backport-failonerror_test-skip-the-test-with-curl-7.75.0+.patch
+ 
 BuildRequires:  gcc libcurl-devel openssl-devel vsftpd
 
 %description
@@ -93,6 +96,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Sat Jul 24 2021 shixuantong <shixuantong@huawei.com> - 7.43.0.6-2
+- fix test fail for test_sslversion_options, test_failonerror and test_failonerror_status_line_invalid_utf8_python3
+
 * Tue Feb 2 2021 shangyibin <shangyibin1@huawei.com> - 7.43.0.6-1
 - Upgrade to version 7.43.0.6
 
