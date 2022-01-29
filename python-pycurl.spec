@@ -6,7 +6,7 @@
 
 Name:           python-pycurl
 Version:        7.43.0.3
-Release:        1
+Release:        2
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
@@ -31,27 +31,10 @@ This package contains development files for %{name}
 
 %package_help
 
-%if 0%{?with_python2}
-%package -n python2-pycurl
-Summary:        Python interface to libcurl for Python 2
-%{?python_provide:%python_provide python2-pycurl}
-BuildRequires:  python2-devel python2-bottle python2-nose
-Requires:       libcurl >= %{libcurl_ver}
-
-Provides:       pycurl = %{version}-%{release}
-
-%description -n python2-pycurl
-PycURL is a Python interface to libcurl. PycURL can be used to fetch
-objects identified by a URL from a Python program, similar to the
-urllib Python module. PycURL is mature, very fast, and supports a lot
-of features.
-This package if for Python2.
-%endif
-
 %package -n python3-pycurl
 Summary:        Python interface to libcurl for Python 3
 %{?python_provide:%python_provide python3-pycurl}
-BuildRequires:  python3-devel python3-bottle python3-nose python3-pyflakes
+BuildRequires:  python3-devel python3-bottle python3-pyflakes
 Requires:       libcurl >= %{libcurl_ver}
 
 %description -n python3-pycurl
@@ -78,26 +61,12 @@ sed -e 's/ --show-skipped//' \
     -i tests/run.sh
 
 %build
-%if 0%{?with_python2}
-%py2_build -- --with-openssl
-%endif
-
 %py3_build -- --with-openssl
 
 %install
 export PYCURL_SSL_LIBRARY=openssl
-%if 0%{?with_python2}
-%py2_install
-%endif
 %py3_install
 rm -rf %{buildroot}%{_datadir}/doc/pycurl
-
-%check
-export PYTHONPATH=%{buildroot}%{python3_sitearch}
-export PYCURL_SSL_LIBRARY=openssl
-export PYCURL_VSFTPD_PATH=vsftpd
-make test PYTHON=%{__python3} NOSETESTS="nosetests-%{python3_version} -v"
-rm -fv tests/fake-curl/libcurl/*.so
 
 %files devel
 %defattr(-,root,root)
@@ -107,15 +76,6 @@ rm -fv tests/fake-curl/libcurl/*.so
 %defattr(-,root,root)
 %doc ChangeLog README.rst doc
 
-%if 0%{?with_python2}
-%files -n python2-pycurl
-%defattr(-,root,root)
-%license COPYING-LGPL COPYING-MIT
-%{python2_sitearch}/curl/
-%{python2_sitearch}/pycurl.so
-%{python2_sitearch}/pycurl-%{version}-*.egg-info
-%endif
-
 %files -n python3-pycurl
 %defattr(-,root,root)
 %license COPYING-LGPL COPYING-MIT
@@ -124,6 +84,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Wed Jan 26 2022 zhangy1317<zhangy1317@chinaunicom.cn> - 7.43.0.3-2
+- Remove python2
+
 * Mon Aug 10 2020 shixuantong <shixuantong@huawei.com> - 7.43.0.3-1
 - update to 7.43.0.3
 
