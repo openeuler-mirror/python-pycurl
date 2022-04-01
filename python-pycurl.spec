@@ -6,17 +6,14 @@
 %global srcname pycurl
 
 Name:           python-%{srcname}
-Version:        7.43.0.6
-Release:        2
+Version:        7.44.1
+Release:        1
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
 Source0:        %{pypi_source}
 # drop link-time vs. run-time TLS backend check (#1446850)
 
-Patch6000:      backport-option_constants_test-skip-check-of-SSLVERSION_SSLv*.patch
-Patch6001:      backport-failonerror_test-skip-the-test-with-curl-7.75.0+.patch
- 
 BuildRequires:  gcc libcurl-devel openssl-devel vsftpd
 
 %description
@@ -24,7 +21,6 @@ PycURL is a Python interface to libcurl. PycURL can be used to fetch
 objects identified by a URL from a Python program, similar to the
 urllib Python module. PycURL is mature, very fast, and supports a lot
 of features.
-
 
 %package        devel
 Summary:        Development files for %{name}
@@ -38,7 +34,7 @@ This package contains development files for %{name}
 %package -n python3-pycurl
 Summary:        Python interface to libcurl for Python 3
 %{?python_provide:%python_provide python3-pycurl}
-BuildRequires:  python3-devel python3-bottle python3-nose python3-pyflakes
+BuildRequires:  python3-devel python3-bottle python3-pyflakes python3-pytest
 Requires:       libcurl >= %{libcurl_ver}
 
 %description -n python3-pycurl
@@ -74,9 +70,14 @@ export PYCURL_SSL_LIBRARY=openssl
 rm -rf %{buildroot}%{_datadir}/doc/pycurl
 
 %check
+# relax crypto policy for the test-suite to make it pass again (#1863711)
+export OPENSSL_SYSTEM_CIPHERS_OVERRIDE=XXX
+export OPENSSL_CONF=
+
 export PYTHONPATH=%{buildroot}%{python3_sitearch}
 export PYCURL_SSL_LIBRARY=openssl
 export PYCURL_VSFTPD_PATH=vsftpd
+export PYTEST_ADDOPTS="--ignore examples -m 'not online'"
 make test PYTHON=%{__python3} NOSETESTS="nosetests-%{python3_version} -v" PYFLAKES=true
 rm -fv tests/fake-curl/libcurl/*.so
 
@@ -96,6 +97,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Wed Dec 29 2021 guozhaorui <guozhaorui1@huawei.com> - 7.44.1-1
+- update version to 7.44.1
+
 * Sat Jul 24 2021 shixuantong <shixuantong@huawei.com> - 7.43.0.6-2
 - fix test fail for test_sslversion_options, test_failonerror and test_failonerror_status_line_invalid_utf8_python3
 
