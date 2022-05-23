@@ -7,7 +7,7 @@
 
 Name:           python-%{srcname}
 Version:        7.44.1
-Release:        1
+Release:        2
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
@@ -76,7 +76,7 @@ export OPENSSL_CONF=
 
 export PYTHONPATH=%{buildroot}%{python3_sitearch}
 export PYCURL_SSL_LIBRARY=openssl
-export PYCURL_VSFTPD_PATH=vsftpd
+#export PYCURL_VSFTPD_PATH=vsftpd
 export PYTEST_ADDOPTS="--ignore examples -m 'not online'"
 make test PYTHON=%{__python3} NOSETESTS="nosetests-%{python3_version} -v" PYFLAKES=true
 rm -fv tests/fake-curl/libcurl/*.so
@@ -97,6 +97,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Tue May 17 2022 lvxiaoqian <xiaoqian@nj.iscas.ac.cn> - 7.44.1-2
+- fix build issue
+
 * Wed Dec 29 2021 guozhaorui <guozhaorui1@huawei.com> - 7.44.1-1
 - update version to 7.44.1
 
