@@ -7,7 +7,7 @@
 
 Name:           python-%{srcname}
 Version:        7.44.1
-Release:        1
+Release:        2
 Summary:        A Python interface to libcurl
 License:        LGPLv2+ or MIT
 URL:            http://pycurl.sourceforge.net/
@@ -97,6 +97,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Fri Aug 05 2022 yanglongkang <yanglongkang@h-partners.com> - 7.44.1-2
+- Add release for rebuild
+
 * Wed Dec 29 2021 guozhaorui <guozhaorui1@huawei.com> - 7.44.1-1
 - update version to 7.44.1
 
