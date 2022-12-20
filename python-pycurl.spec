@@ -118,7 +118,7 @@ rm -fv tests/fake-curl/libcurl/*.so
 - SUG:NA
 - DESC:fix compile error
 
-* Thu Aug 4 2020 shixuantong <shixuantong@huawei.com> - 7.43.0.5-1
+* Tue Aug 4 2020 shixuantong <shixuantong@huawei.com> - 7.43.0.5-1
 - update to 7.43.0.5
 
 * Fri Oct 25 2019 openEuler Buildteam <buildteam@openeuler.org> - 7.43.0.2-6
