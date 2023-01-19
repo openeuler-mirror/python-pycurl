@@ -6,10 +6,10 @@
 %global srcname pycurl
 
 Name:           python-%{srcname}
-Version:        7.44.1
-Release:        2
+Version:        7.45.2
+Release:        1
 Summary:        A Python interface to libcurl
-License:        LGPLv2+ or MIT
+License:        LGPL-2.0+ or MIT
 URL:            http://pycurl.sourceforge.net/
 Source0:        %{pypi_source}
 # drop link-time vs. run-time TLS backend check (#1446850)
@@ -97,6 +97,9 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Thu Jan 19 2023 chendonghui6 <chendonghui6@huawei.com> - 7.45.2-1
+- update version to 7.45.2
+
 * Fri Aug 05 2022 yanglongkang <yanglongkang@h-partners.com> - 7.44.1-2
 - Add release for rebuild
 
