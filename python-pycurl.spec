@@ -7,12 +7,14 @@
 
 Name:           python-%{srcname}
 Version:        7.45.2
-Release:        1
+Release:        2
 Summary:        A Python interface to libcurl
 License:        LGPL-2.0+ or MIT
 URL:            http://pycurl.sourceforge.net/
 Source0:        %{pypi_source}
 # drop link-time vs. run-time TLS backend check (#1446850)
+
+Patch1:         0002-python-pycurl-7.45.2-disable-test_http_version_3.patch
 
 BuildRequires:  gcc libcurl-devel openssl-devel vsftpd
 
@@ -97,6 +99,12 @@ rm -fv tests/fake-curl/libcurl/*.so
 %{python3_sitearch}/pycurl-%{version}-*.egg-info
 
 %changelog
+* Tue Mar 21 2023 zhuofeng <zhuofeng2@huawei.com> - 7.45.2-2
+- Type:bugfix
+- CVE:NA
+- SUG:NA
+- DESC:temporarily disable test_http_version_3
+
 * Thu Jan 19 2023 chendonghui6 <chendonghui6@huawei.com> - 7.45.2-1
 - update version to 7.45.2
 
